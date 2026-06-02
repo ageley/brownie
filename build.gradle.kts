@@ -17,8 +17,6 @@ repositories {
 	mavenCentral()
 }
 
-extra["springAiVersion"] = "2.0.0-M8"
-
 dependencies {
 	implementation("org.springframework.ai:spring-ai-starter-model-anthropic")
 	compileOnly("org.projectlombok:lombok")
@@ -31,7 +29,7 @@ dependencies {
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
+		mavenBom("org.springframework.ai:spring-ai-bom:2.0.0-M8")
 	}
 }
 

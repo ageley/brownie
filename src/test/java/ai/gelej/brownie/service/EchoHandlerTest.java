@@ -1,4 +1,4 @@
-package ai.gelej.brownie.telegram;
+package ai.gelej.brownie.service;
 
 import org.junit.jupiter.api.Test;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

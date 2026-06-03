@@ -3,7 +3,6 @@ spring:
     name: brownie
   ai:
     anthropic:
-      # Dummy key so the context loads offline; no real calls are made in tests.
       api-key: test-key
 
 telegram:
@@ -11,5 +10,4 @@ telegram:
     token: test-token
     username: nathan-brownie
     mode: long-polling
-    # Keep the context offline during tests: beans are created but the bot never connects.
     auto-start: false

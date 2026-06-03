@@ -1,17 +1,15 @@
 plugins {
 	java
-	id("org.springframework.boot") version "4.0.6"
-	id("io.spring.dependency-management") version "1.1.7"
+	id("org.springframework.boot") version providers.gradleProperty("springBootVersion").get()
+	id("io.spring.dependency-management") version providers.gradleProperty("springDependencyManagementVersion").get()
 }
 
 group = "ai.gelej"
 version = "0.0.1-SNAPSHOT"
 
-val telegramBotsVersion = "8.3.0"
-
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(26)
+		languageVersion = JavaLanguageVersion.of(providers.gradleProperty("javaVersion").get().toInt())
 	}
 }
 
@@ -19,14 +17,14 @@ repositories {
 	mavenCentral()
 }
 
+val telegramBotsVersion = providers.gradleProperty("telegramBotsVersion").get()
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.ai:spring-ai-starter-model-anthropic")
 
-	// Telegram Bot API: HTTP client + long polling receiver.
-	// Webhook (push) mode is served by Spring MVC, so no embedded server module is needed.
 	implementation("org.telegram:telegrambots-client:$telegramBotsVersion")
-	implementation("org.telegram:telegrambots-longpolling:$telegramBotsVersion")
+	implementation("org.telegram:telegrambots-springboot-longpolling-starter:$telegramBotsVersion")
 
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
@@ -38,7 +36,7 @@ dependencies {
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.ai:spring-ai-bom:2.0.0-M8")
+		mavenBom("org.springframework.ai:spring-ai-bom:${providers.gradleProperty("springAiVersion").get()}")
 	}
 }
 

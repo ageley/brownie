@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: brownie
+  ai:
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:}
+
+telegram:
+  bot:
+    # Token issued by @BotFather. Provide via env var in real deployments.
+    token: ${TELEGRAM_BOT_TOKEN:}
+    username: nathan-brownie
+    # Delivery mode: "long-polling" (pull) or "webhook" (push). Switch here without code changes.
+    mode: ${TELEGRAM_BOT_MODE:long-polling}
+    webhook:
+      # Public HTTPS base URL of this service (used only in webhook mode).
+      url: ${TELEGRAM_WEBHOOK_URL:}
+      path: /telegram/webhook

@@ -10,4 +10,3 @@ telegram:
     token: test-token
     username: nathan-brownie
     mode: long-polling
-    auto-start: false

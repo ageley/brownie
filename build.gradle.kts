@@ -7,17 +7,19 @@ plugins {
 group = "ai.gelej"
 version = "0.0.1-SNAPSHOT"
 
+val javaVersion: String by project
+val springAiVersion: String by project
+val telegramBotsVersion: String by project
+
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(providers.gradleProperty("javaVersion").get().toInt())
+		languageVersion = JavaLanguageVersion.of(javaVersion.toInt())
 	}
 }
 
 repositories {
 	mavenCentral()
 }
-
-val telegramBotsVersion = providers.gradleProperty("telegramBotsVersion").get()
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -36,7 +38,7 @@ dependencies {
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.ai:spring-ai-bom:${providers.gradleProperty("springAiVersion").get()}")
+		mavenBom("org.springframework.ai:spring-ai-bom:$springAiVersion")
 	}
 }
 

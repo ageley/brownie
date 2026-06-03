@@ -2,7 +2,7 @@ package ai.gelej.brownie.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.longpolling.interfaces.LongPollingUpdateConsumer;
 import org.telegram.telegrambots.longpolling.starter.SpringLongPollingBot;
@@ -15,13 +15,13 @@ import ai.gelej.brownie.config.BotProperties;
 /**
  * Long polling (pull) bot. Registered automatically by the Telegram Spring Boot starter, which
  * polls Telegram and feeds updates to this consumer; replies are produced by the dispatcher.
- * Active when {@code telegram.bot.mode=long-polling} and {@code telegram.bot.auto-start=true}.
+ * Active when {@code telegram.bot.mode=long-polling} (the default).
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@ConditionalOnExpression(
-        "'${telegram.bot.mode:long-polling}' == 'long-polling' and ${telegram.bot.auto-start:true}")
+@ConditionalOnProperty(prefix = "telegram.bot", name = "mode", havingValue = "long-polling",
+        matchIfMissing = true)
 public class EchoBot implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
 
     private final BotProperties properties;

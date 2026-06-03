@@ -1,5 +1,6 @@
 package ai.gelej.brownie.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -9,19 +10,13 @@ import java.util.Optional;
 
 /**
  * Routes an incoming update through the ordered chain of {@link MessageHandler}s, stopping at
- * the first handler that produces a reply.
+ * the first handler that produces a reply. The chain is injected in {@code @Order} sequence.
  */
 @Service
+@RequiredArgsConstructor
 public class MessageDispatcher {
 
     private final List<MessageHandler> handlers;
-
-    /**
-     * @param handlers the handler chain, injected in {@code @Order} sequence
-     */
-    public MessageDispatcher(List<MessageHandler> handlers) {
-        this.handlers = handlers;
-    }
 
     /**
      * Dispatches an update to the first handler that accepts it.

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: brownie
+  ai:
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:}
+
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN:}
+    mode: long-polling
+    webhook:
+      url: ${TELEGRAM_WEBHOOK_URL:}
+      path: /telegram/webhook

@@ -13,12 +13,9 @@ on:
 jobs:
   claude:
     if: |
+      (github.actor == 'ageley' || github.actor == 'claude') &&
+      (github.triggering_actor == 'ageley' || github.triggering_actor == 'claude') &&
       (
-        github.actor == 'ageley' ||
-        github.triggering_actor == 'ageley' ||
-        github.actor == 'claude' ||
-        github.triggering_actor == 'claude'
-      ) && (
         (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
         (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
         (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
@@ -42,11 +39,8 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          additional_permissions: | # This is an optional setting that allows Claude to read CI results on PRs
+          additional_permissions: |
             actions: read
-          # prompt: 'Update the pull request description to include a summary of changes.'
           claude_args: |
             --model claude-opus-4-8
             --effort medium
-          # claude_args: '--allowed-tools Bash(gh pr *)'
-

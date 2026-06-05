@@ -1,0 +1,7 @@
+services:
+  nathan-brownie:
+    build: .
+    image: nathan-brownie:1.0
+    container_name: nathan-brownie
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}

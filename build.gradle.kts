@@ -1,15 +1,19 @@
 plugins {
 	java
-	id("org.springframework.boot") version "4.0.6"
-	id("io.spring.dependency-management") version "1.1.7"
+	id("org.springframework.boot")
+	id("io.spring.dependency-management")
 }
 
 group = "ai.gelej"
 version = "0.0.1-SNAPSHOT"
 
+val javaVersion: String by project
+val springAiVersion: String by project
+val telegramBotsVersion: String by project
+
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(26)
+		languageVersion = JavaLanguageVersion.of(javaVersion.toInt())
 	}
 }
 
@@ -18,7 +22,12 @@ repositories {
 }
 
 dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.ai:spring-ai-starter-model-anthropic")
+
+	implementation("org.telegram:telegrambots-client:$telegramBotsVersion")
+	implementation("org.telegram:telegrambots-springboot-longpolling-starter:$telegramBotsVersion")
+
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -29,7 +38,7 @@ dependencies {
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.ai:spring-ai-bom:2.0.0-M8")
+		mavenBom("org.springframework.ai:spring-ai-bom:$springAiVersion")
 	}
 }
 

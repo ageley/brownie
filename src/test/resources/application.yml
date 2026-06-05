@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: brownie
+  ai:
+    anthropic:
+      api-key: test-key
+
+telegram:
+  bot:
+    token: test-token
+    username: nathan-brownie
+    mode: long-polling

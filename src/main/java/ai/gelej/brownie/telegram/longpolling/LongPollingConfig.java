@@ -1,5 +1,7 @@
-package ai.gelej.brownie.config;
+package ai.gelej.brownie.telegram.longpolling;
 
+import ai.gelej.brownie.telegram.BotProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,11 +9,15 @@ import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 
 /**
- * Provides the shared {@link TelegramClient} used to call the Telegram Bot API.
+ * Wiring for long-polling (pull) mode. Active when {@code telegram.bot.mode=long-polling}
+ * (the default). Produces a plain {@link TelegramClient} used only to send replies; the
+ * Telegram Spring Boot starter does the polling.
  */
 @Configuration
 @EnableConfigurationProperties(BotProperties.class)
-public class TelegramClientConfig {
+@ConditionalOnProperty(prefix = "telegram.bot", name = "mode", havingValue = "long-polling",
+        matchIfMissing = true)
+public class LongPollingConfig {
 
     /**
      * Creates the Telegram API client authenticated with the configured bot token.

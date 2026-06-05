@@ -1,4 +1,4 @@
-package ai.gelej.brownie.config;
+package ai.gelej.brownie.telegram;
 
 import lombok.Getter;
 import lombok.Setter;

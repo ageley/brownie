@@ -1,5 +1,7 @@
-package ai.gelej.brownie.service;
+package ai.gelej.brownie.telegram.longpolling;
 
+import ai.gelej.brownie.telegram.BotProperties;
+import ai.gelej.brownie.telegram.MessageDispatcher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -9,8 +11,6 @@ import org.telegram.telegrambots.longpolling.starter.SpringLongPollingBot;
 import org.telegram.telegrambots.longpolling.util.LongPollingSingleThreadUpdateConsumer;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
-
-import ai.gelej.brownie.config.BotProperties;
 
 /**
  * Long polling (pull) bot. Registered automatically by the Telegram Spring Boot starter, which

@@ -1,6 +1,6 @@
-package ai.gelej.brownie.controller;
+package ai.gelej.brownie.telegram.webhook;
 
-import ai.gelej.brownie.service.MessageDispatcher;
+import ai.gelej.brownie.telegram.MessageDispatcher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

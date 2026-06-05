@@ -1,8 +1,6 @@
-# General coding preferences
+# Coding preferences
 
-Reusable, project-agnostic conventions accumulated from code-review feedback. Project-specific
-decisions live in [docs/project-decisions.md](docs/project-decisions.md). Update both after every
-review round.
+Conventions accumulated from code-review feedback. Update after every review round.
 
 ## Comments
 
@@ -29,34 +27,37 @@ review round.
 
 ## Package layout
 
-Organize by layer (relative to the base package):
-
-- `config` — `@Configuration` classes and `@ConfigurationProperties`.
-- `model` — enums, records, POJOs.
-- `controller` — controllers.
-- `service` — services, handlers, business logic.
+- Organize by feature first. Group a feature into its own package (e.g. `telegram`); when it has
+  several independent variants, give each its own sub-package (e.g. `telegram.longpolling`,
+  `telegram.webhook`) and keep shared types in the parent. Code shared across features can still be
+  grouped by layer (`config`, `model`, `controller`, `service`).
 
 ## Naming
 
 - Do not prefix class names with the framework/vendor (e.g. `Telegram`). The only exception is a
-  class that produces a vendor bean named that way (e.g. `TelegramClientConfig` → `TelegramClient`).
+  symbol that exists to produce a vendor-named bean (e.g. a `telegramClient` factory method).
 
 ## Build & dependencies
 
 - Keep **all versions** (Java, Gradle plugins, dependencies, BOMs) in `gradle.properties`; no
   version literals in `build.gradle.kts`.
-- Reference them with Kotlin delegated properties and `$` interpolation:
+- Reference dependency/BOM versions with Kotlin delegated properties and `$` interpolation:
   `val telegramBotsVersion: String by project` then `"org.telegram:telegrambots-client:$telegramBotsVersion"`.
-- The `plugins { }` block is the one exception: it must be the first block in the file, so no
-  `val`/`by project` can precede it. Read plugin versions inline there with
-  `providers.gradleProperty("...").get()` (or move them to `settings.gradle.kts` `pluginManagement`).
+- Wire **plugin** versions in `settings.gradle.kts`: read them in `pluginManagement` with
+  `val springBootVersion: String by settings` and apply with `id("...") version springBootVersion`.
+  The `build.gradle.kts` `plugins { }` block then lists plugins without versions.
 - Keep dependency versions current.
 
 ## Spring wiring
 
-- Prefer plain beans over boilerplate lifecycle wrappers. Declare lifecycle beans directly as
-  components, not wrapped inside a `@Configuration` factory method.
+- Prefer plain beans over boilerplate lifecycle wrappers. Declare beans directly as components, not
+  wrapped inside a `@Configuration` factory method, unless a factory adds value.
 - Select beans by configuration with `@ConditionalOnProperty` rather than `@ConditionalOnExpression`
   when a simple property match suffices.
-- A `SmartLifecycle` bean that depends on the web server being up should override `getPhase()` to
-  start last (and therefore stop first).
+- Prefer a one-shot startup side effect (e.g. registering an external webhook) in the bean that owns
+  it over a `SmartLifecycle` whose teardown is not strictly required.
+
+## Docker
+
+- The `Dockerfile` contains only `FROM`, `COPY` the jar, and `ENTRYPOINT`. The jar is built by the
+  CI/Gradle step beforehand; the image does not build it.

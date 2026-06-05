@@ -1,7 +1,7 @@
 plugins {
 	java
-	id("org.springframework.boot") version providers.gradleProperty("springBootVersion").get()
-	id("io.spring.dependency-management") version providers.gradleProperty("springDependencyManagementVersion").get()
+	id("org.springframework.boot")
+	id("io.spring.dependency-management")
 }
 
 group = "ai.gelej"

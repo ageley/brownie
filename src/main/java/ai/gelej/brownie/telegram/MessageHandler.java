@@ -1,4 +1,4 @@
-package ai.gelej.brownie.service;
+package ai.gelej.brownie.telegram;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;

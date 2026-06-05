@@ -1,4 +1,4 @@
-package ai.gelej.brownie.service;
+package ai.gelej.brownie.telegram;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

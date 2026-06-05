@@ -42,8 +42,8 @@ Project-specific decisions belong in the Javadoc of the code they concern, not h
 
 - Name test methods in three underscore-separated parts: the method under test, the test-case
   description, and the expected outcome (e.g. `handle_messageWithText_echoesItBack`).
-- Structure the body with `//given` (optional, only when there are preparation steps), `//when`,
-  and `//then` sections, each introduced by that single-line comment.
+- Structure the body with `//given`, `//when`, and `//then` sections, each introduced by that
+  single-line comment.
 
 ## Build & dependencies
 

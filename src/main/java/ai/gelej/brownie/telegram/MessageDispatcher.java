@@ -1,5 +1,6 @@
 package ai.gelej.brownie.telegram;
 
+import ai.gelej.brownie.telegram.handlers.MessageHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

@@ -14,8 +14,6 @@ public class BotProperties {
 
     private String token;
 
-    private String username = "nathan-brownie";
-
     private Webhook webhook = new Webhook();
 
     @Getter

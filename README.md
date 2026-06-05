@@ -1,6 +1,6 @@
-# brownie
+# Nathan Brownie
 
-AI calory tracker — currently exposing a simple **echo** Telegram bot (`nathan-brownie`).
+AI calory tracker
 
 ## Components & integrations
 
@@ -9,12 +9,7 @@ AI calory tracker — currently exposing a simple **echo** Telegram bot (`nathan
  │          │ ─────────────────────► │                │ ──────────────────────────► │                     │
  │   User   │                        │    Telegram    │                             │  nathan-brownie bot │
  │          │ ◄───────────────────── │  (Bot API/MTP) │ ◄────────────────────────── │   (Spring Boot app) │
- └──────────┘     echoed replies     └────────────────┘     sendMessage (echo)       └─────────────────────┘
-
- Receiving updates from Telegram — selectable via application.yml (telegram.bot.mode):
-
-   long-polling (pull):   bot  ──getUpdates──►  Telegram        (no public URL required)
-   webhook      (push):   Telegram  ──POST /telegram/webhook──►  bot   (public HTTPS URL required)
+ └──────────┘     echoed replies     └────────────────┘     sendMessage (echo)      └─────────────────────┘
 ```
 
 - **User** — chats with the bot in Telegram and receives the same text echoed back.
@@ -23,42 +18,31 @@ AI calory tracker — currently exposing a simple **echo** Telegram bot (`nathan
 
 ## Running locally
 
-Set the bot token (from [@BotFather](https://t.me/BotFather)) and run:
+Create an .env file in the project root (see [.env.example](.env.example))
 
-```bash
-TELEGRAM_BOT_TOKEN=<your-token> ./gradlew bootRun
+Build a .jar from the project root:
+
+```shell
+./gradlew build
+```
+
+Run an app:
+
+```shell
+docker compose up -d --build
+```
+
+Cleanup:
+
+```shell
+docker compose down -v --rmi
 ```
 
 ### Switching delivery mode
 
 The mode is controlled by `telegram.bot.mode` in [`application.yml`](src/main/resources/application.yml)
-(or the `TELEGRAM_BOT_MODE` environment variable):
 
 | Mode           | Value          | Notes                                                           |
 |----------------|----------------|-----------------------------------------------------------------|
 | Long polling   | `long-polling` | Default. The bot pulls updates; no public URL needed.           |
 | Webhook (push) | `webhook`      | Telegram pushes updates to `telegram.bot.webhook.url` + `path`. |
-
-For webhook mode also set the public base URL:
-
-```bash
-TELEGRAM_BOT_MODE=webhook \
-TELEGRAM_BOT_TOKEN=<your-token> \
-TELEGRAM_WEBHOOK_URL=https://your-public-host \
-./gradlew bootRun
-```
-
-## Tests
-
-```bash
-./gradlew test
-```
-
-## Docker
-
-The app packages into a slim [`bellsoft/liberica-openjre-alpine`](https://hub.docker.com/r/bellsoft/liberica-openjre-alpine) image:
-
-```bash
-docker build -t nathan-brownie .
-docker run -e TELEGRAM_BOT_TOKEN=<your-token> nathan-brownie
-```

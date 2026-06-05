@@ -8,8 +8,7 @@ spring:
 telegram:
   bot:
     token: ${TELEGRAM_BOT_TOKEN:}
-    username: nathan-brownie
-    mode: ${TELEGRAM_BOT_MODE:long-polling}
+    mode: long-polling
     webhook:
       url: ${TELEGRAM_WEBHOOK_URL:}
       path: /telegram/webhook

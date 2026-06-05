@@ -1,3 +1,5 @@
+rootProject.name = "brownie"
+
 pluginManagement {
     val springBootVersion: String by settings
     val springDependencyManagementVersion: String by settings
@@ -7,5 +9,3 @@ pluginManagement {
         id("io.spring.dependency-management") version springDependencyManagementVersion
     }
 }
-
-rootProject.name = "brownie"

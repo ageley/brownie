@@ -1,7 +1,6 @@
 package ai.gelej.brownie.telegram.webhook;
 
 import ai.gelej.brownie.telegram.BotProperties;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +15,6 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
  * {@link TelegramClient} that registers the webhook URL with Telegram as it is created, so updates
  * are pushed to {@link WebhookController}.
  */
-@Slf4j
 @Configuration
 @EnableConfigurationProperties(BotProperties.class)
 @ConditionalOnProperty(prefix = "telegram.bot", name = "mode", havingValue = "webhook")
@@ -38,8 +36,6 @@ public class WebhookConfig {
             telegramClient.execute(SetWebhook.builder()
                     .url(url)
                     .build());
-            log.info("Telegram bot '{}' started in webhook mode, updates pushed to {}",
-                    properties.getUsername(), url);
         } catch (TelegramApiException e) {
             throw new IllegalStateException("Failed to register Telegram webhook at " + url, e);
         }

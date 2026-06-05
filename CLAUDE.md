@@ -1,6 +1,7 @@
 # Coding preferences
 
-Conventions accumulated from code-review feedback. Update after every review round.
+This file accumulates **general coding preferences** only. Update it after every review round.
+Project-specific decisions belong in the Javadoc of the code they concern, not here.
 
 ## Comments
 
@@ -36,6 +37,13 @@ Conventions accumulated from code-review feedback. Update after every review rou
 
 - Do not prefix class names with the framework/vendor (e.g. `Telegram`). The only exception is a
   symbol that exists to produce a vendor-named bean (e.g. a `telegramClient` factory method).
+
+## Testing
+
+- Name test methods in three underscore-separated parts: the method under test, the test-case
+  description, and the expected outcome (e.g. `handle_messageWithText_echoesItBack`).
+- Structure the body with `//given` (optional, only when there are preparation steps), `//when`,
+  and `//then` sections, each introduced by that single-line comment.
 
 ## Build & dependencies
 

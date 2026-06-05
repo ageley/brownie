@@ -15,34 +15,50 @@ class EchoHandlerTest {
     private final EchoHandler echoHandler = new EchoHandler();
 
     @Test
-    void echoesTextBackToTheSameChat() {
+    void handle_messageWithText_echoesItBackToTheSameChat() {
+        //given
         Update update = updateWithText(424242L, "Hello, brownie!");
 
+        //when
         Optional<SendMessage> reply = echoHandler.handle(update);
 
+        //then
         assertThat(reply).isPresent();
         assertThat(reply.get().getText()).isEqualTo("Hello, brownie!");
         assertThat(reply.get().getChatId()).isEqualTo("424242");
     }
 
     @Test
-    void ignoresUpdatesWithoutAMessage() {
-        assertThat(echoHandler.handle(new Update())).isEmpty();
+    void handle_updateWithoutMessage_returnsEmpty() {
+        //when
+        Optional<SendMessage> reply = echoHandler.handle(new Update());
+
+        //then
+        assertThat(reply).isEmpty();
     }
 
     @Test
-    void ignoresMessagesWithoutText() {
+    void handle_messageWithoutText_returnsEmpty() {
+        //given
         Message message = new Message();
         message.setChat(chat(1L));
         Update update = new Update();
         update.setMessage(message);
 
-        assertThat(echoHandler.handle(update)).isEmpty();
+        //when
+        Optional<SendMessage> reply = echoHandler.handle(update);
+
+        //then
+        assertThat(reply).isEmpty();
     }
 
     @Test
-    void ignoresNullUpdate() {
-        assertThat(echoHandler.handle(null)).isEmpty();
+    void handle_nullUpdate_returnsEmpty() {
+        //when
+        Optional<SendMessage> reply = echoHandler.handle(null);
+
+        //then
+        assertThat(reply).isEmpty();
     }
 
     private static Update updateWithText(long chatId, String text) {
@@ -55,9 +71,6 @@ class EchoHandlerTest {
     }
 
     private static Chat chat(long id) {
-        Chat chat = new Chat();
-        chat.setId(id);
-        chat.setType("private");
-        return chat;
+        return new Chat(id, "private");
     }
 }

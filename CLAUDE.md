@@ -33,11 +33,6 @@ Project-specific decisions belong in the Javadoc of the code they concern, not h
   `telegram.webhook`) and keep shared types in the parent. Code shared across features can still be
   grouped by layer (`config`, `model`, `controller`, `service`).
 
-## Naming
-
-- Do not prefix class names with the framework/vendor (e.g. `Telegram`). The only exception is a
-  symbol that exists to produce a vendor-named bean (e.g. a `telegramClient` factory method).
-
 ## Testing
 
 - Name test methods in three underscore-separated parts: the method under test, the test-case

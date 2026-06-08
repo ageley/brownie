@@ -18,7 +18,7 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
 @Configuration
 @EnableConfigurationProperties(BotProperties.class)
 @ConditionalOnProperty(prefix = "telegram.bot", name = "mode", havingValue = "webhook")
-public class WebhookConfig {
+public class WebhookClientConfig {
 
     /**
      * Creates the Telegram API client and registers the webhook URL with Telegram. {@code SetWebhook}

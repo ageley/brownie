@@ -1,7 +1,7 @@
 package ai.gelej.brownie.telegram.longpolling;
 
 import ai.gelej.brownie.telegram.BotProperties;
-import ai.gelej.brownie.telegram.MessageDispatcher;
+import ai.gelej.brownie.telegram.dispatcher.MessageDispatcher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,7 +22,7 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
 @RequiredArgsConstructor
 @ConditionalOnProperty(prefix = "telegram.bot", name = "mode", havingValue = "long-polling",
         matchIfMissing = true)
-public class EchoBot implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
+public class LongPollingConsumer implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
 
     private final BotProperties properties;
     private final TelegramClient telegramClient;

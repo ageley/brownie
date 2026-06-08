@@ -1,6 +1,5 @@
-package ai.gelej.brownie.telegram;
+package ai.gelej.brownie.telegram.dispatcher.handlers;
 
-import ai.gelej.brownie.telegram.handlers.EchoHandler;
 import org.junit.jupiter.api.Test;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;

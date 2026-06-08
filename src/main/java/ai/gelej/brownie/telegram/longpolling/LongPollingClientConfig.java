@@ -17,7 +17,7 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
 @EnableConfigurationProperties(BotProperties.class)
 @ConditionalOnProperty(prefix = "telegram.bot", name = "mode", havingValue = "long-polling",
         matchIfMissing = true)
-public class LongPollingConfig {
+public class LongPollingClientConfig {
 
     /**
      * Creates the Telegram API client authenticated with the configured bot token.

@@ -1,4 +1,4 @@
-package ai.gelej.brownie.telegram.handlers;
+package ai.gelej.brownie.telegram.dispatcher.handlers;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

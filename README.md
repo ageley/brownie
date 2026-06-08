@@ -5,11 +5,11 @@ AI calory tracker
 ## Components & integrations
 
 ```
- ┌──────────┐        messages        ┌────────────────┐     getUpdates / webhook    ┌─────────────────────┐
- │          │ ─────────────────────► │                │ ──────────────────────────► │                     │
- │   User   │                        │    Telegram    │                             │  nathan-brownie bot │
- │          │ ◄───────────────────── │  (Bot API/MTP) │ ◄────────────────────────── │   (Spring Boot app) │
- └──────────┘     echoed replies     └────────────────┘     sendMessage (echo)      └─────────────────────┘
+ ┌──────────┐        messages        ┌──────────────┐     getUpdates / webhook    ┌────────────────────┐
+ │          │ ─────────────────────► │              │ ──────────────────────────► │                    │
+ │   User   │                        │   Telegram   │                             │   nathan-brownie   │
+ │          │ ◄───────────────────── │              │ ◄────────────────────────── │                    │
+ └──────────┘     echoed replies     └──────────────┘     sendMessage (echo)      └────────────────────┘
 ```
 
 - **User** — chats with the bot in Telegram and receives the same text echoed back.

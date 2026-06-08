@@ -1,4 +1,4 @@
-package ai.gelej.brownie.telegram.handlers;
+package ai.gelej.brownie.telegram.dispatcher.handlers;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;

@@ -5,7 +5,6 @@ plugins {
 }
 
 group = "ai.gelej"
-version = "0.0.1-SNAPSHOT"
 
 val javaVersion: String by project
 val springAiVersion: String by project

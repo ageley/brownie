@@ -1,0 +1,18 @@
+name: Cleanup snapshots
+on:
+  schedule:
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+permissions:
+  packages: write
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: snok/container-retention-policy@v3.0.0
+        with:
+          account: ${{ github.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          image-names: brownie-snapshots
+          cut-off: 2w
+          keep-n-most-recent: 10

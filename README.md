@@ -5,16 +5,55 @@ AI calory tracker
 ## Components & integrations
 
 ```
- ┌──────────┐        messages        ┌──────────────┐     getUpdates / webhook    ┌────────────────────┐
- │          │ ─────────────────────► │              │ ──────────────────────────► │                    │
- │   User   │                        │   Telegram   │                             │   nathan-brownie   │
- │          │ ◄───────────────────── │              │ ◄────────────────────────── │                    │
- └──────────┘     echoed replies     └──────────────┘     sendMessage (echo)      └────────────────────┘
+ ┌──────────┐        messages        ┌──────────────┐     getUpdates / webhook    ┌────────────────────┐     save      ┌──────────────┐
+ │          │ ─────────────────────► │              │ ──────────────────────────► │                    │ ────────────► │              │
+ │   User   │                        │   Telegram   │                             │   nathan-brownie   │               │   Postgres   │
+ │          │ ◄───────────────────── │              │ ◄────────────────────────── │                    │ ◄──────────── │              │
+ └──────────┘     confirmations      └──────────────┘     sendMessage (tool)      └─────────┬──────────┘    ingredients └──────────────┘
+                                                                                            │ ▲
+                                                                                    extract │ │ tools
+                                                                                            ▼ │
+                                                                                   ┌────────────────────┐
+                                                                                   │   Anthropic Haiku   │
+                                                                                   └────────────────────┘
 ```
 
-- **User** — chats with the bot in Telegram and receives the same text echoed back.
+- **User** — chats with the bot in Telegram, sends ingredient nutrition facts and receives a confirmation.
 - **Telegram** — the Bot API platform that relays messages between the user and the bot.
-- **nathan-brownie bot** — this Spring Boot application; it receives updates and echoes text back.
+- **nathan-brownie bot** — this Spring Boot application; it parses ingredient messages and saves them.
+- **Postgres** — stores ingredient records (per chat), managed with Flyway and Spring Data JDBC.
+- **Anthropic Haiku** — handles messages the programmatic parser cannot, using the same save/send tools.
+
+## Saving an ingredient
+
+Send the bot a product's nutrition facts per 100 grams. The first non-blank line is the ingredient
+name; the next four lines are calories, fat, carbs and protein in any order. Names and units may be
+written in English or Russian, in any case, with a dash, colon, comma, space or tab between a fact
+and its amount; the amount may use a comma or dot decimal separator and the unit may be omitted.
+
+```
+Chocolate brownie
+Calories: 438kcal
+Fat: 19g
+Carbs: 61g
+Protein: 5g
+```
+
+The bot saves the record and replies with a confirmation in the message's language. The confirmation
+mirrors the input so it can be forwarded and parsed again; lines ending with a sparkles emoji ✨ are
+comments and are dropped on re-parsing:
+
+```
+Saved ✨
+Chocolate brownie
+Calories: 438 kcal
+Fat: 19 g
+Carbs: 61 g
+Protein: 5 g
+```
+
+Messages that cannot be parsed programmatically are handled by the AI agent, which extracts and
+saves the ingredient (or asks for the correct format) and replies in the language it was asked in.
 
 ## Running locally
 
@@ -35,7 +74,7 @@ docker compose up -d --build
 Cleanup:
 
 ```shell
-docker compose down -v --rmi
+docker compose down -v --rmi all
 ```
 
 ### Switching delivery mode

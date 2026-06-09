@@ -1,9 +1,16 @@
 spring:
   application:
     name: brownie
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/brownie}
+    username: ${DB_USERNAME:brownie}
+    password: ${DB_PASSWORD:brownie}
   ai:
     anthropic:
       api-key: ${ANTHROPIC_API_KEY:}
+      chat:
+        options:
+          model: claude-haiku-4-5
 
 telegram:
   bot:
@@ -12,3 +19,7 @@ telegram:
     webhook:
       url: ${TELEGRAM_WEBHOOK_URL:}
       path: /telegram/webhook
+
+ingredient:
+  cleanup:
+    cron: "0 0 * * * *"

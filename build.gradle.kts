@@ -23,7 +23,12 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	implementation("org.springframework.ai:spring-ai-starter-model-anthropic")
+
+	implementation("org.flywaydb:flyway-core")
+	implementation("org.flywaydb:flyway-database-postgresql")
+	runtimeOnly("org.postgresql:postgresql")
 
 	implementation("org.telegram:telegrambots-client:$telegramBotsVersion")
 	implementation("org.telegram:telegrambots-springboot-longpolling-starter:$telegramBotsVersion")
